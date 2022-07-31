@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using HRMS.Dal.Contracts;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using static System.DateTime;
+using static Microsoft.EntityFrameworkCore.EntityState;
 
 namespace HRMS.Dal
 {
@@ -31,7 +32,28 @@ namespace HRMS.Dal
         private void DoInterception()
         {
             // Convert hard delete to soft delete
+            foreach (var entry in _hrmsDbContext.ChangeTracker.Entries<BaseEntity>())
+            {
+                if (entry.State != Deleted) continue;
+                entry.State = Modified;
+                entry.CurrentValues["IsDeleted"] = true;
+            }
             // do audit tracking
+            foreach (EntityEntry entry in _hrmsDbContext.ChangeTracker.Entries())
+            {
+                if (entry.State != Added && entry.State != Modified) continue;
+                if (entry.Entity is not BaseEntity entity) continue;
+                if (entry.State == Added)
+                {
+                    entity.CreatedBy = "System";
+                    entity.CreatedOn = Now;
+                }
+                else
+                {
+                    entity.ModifiedBy = "System";
+                    entity.ModifiedOn = Now;
+                }
+            }
         }
     }
 }
