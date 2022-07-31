@@ -5,21 +5,21 @@ namespace HRMS.Dal
 {
     internal abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        protected DbSet<T> DbSet;
+        protected DbSet<T> _dbSet;
 
         protected BaseRepository(HrmsDbContext hrmsDbContext)
         {
-            DbSet = hrmsDbContext.Set<T>();
+            _dbSet = hrmsDbContext.Set<T>();
         }
 
         public T Find(object key)
         {
-            return DbSet.Find(key);
+            return _dbSet.Find(key);
         }
 
         public void Add(T entity)
         {
-            DbSet.Add(entity);
+            _dbSet.Add(entity);
         }
     }
 }
