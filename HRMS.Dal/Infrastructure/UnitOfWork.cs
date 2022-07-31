@@ -1,13 +1,15 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using HRMS.Dal.Contracts;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using static System.DateTime;
+using static System.GC;
 using static Microsoft.EntityFrameworkCore.EntityState;
 
 namespace HRMS.Dal
 {
-    internal class UnitOfWork : IUnitOfWork
+    internal class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly HrmsDbContext _hrmsDbContext;
 
@@ -54,6 +56,12 @@ namespace HRMS.Dal
                     entity.ModifiedOn = Now;
                 }
             }
+        }
+        
+        public void Dispose()
+        {
+            _hrmsDbContext.Dispose();
+            SuppressFinalize(this);
         }
     }
 }
