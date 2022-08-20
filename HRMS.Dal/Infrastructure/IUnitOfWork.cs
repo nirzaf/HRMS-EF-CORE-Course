@@ -1,11 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace HRMS.Dal
+namespace HRMS.Dal;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        bool SaveChanges();
-        Task<bool> SaveChangesAsync(CancellationToken token = default);
-    }
+    bool SaveChanges();
+    Task<bool> SaveChangesAsync(CancellationToken token = default);
 }

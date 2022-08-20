@@ -1,25 +1,24 @@
 ﻿using HRMS.Dal.Contracts;
 using Microsoft.EntityFrameworkCore;
 
-namespace HRMS.Dal
+namespace HRMS.Dal;
+
+internal abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
-    internal abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
+    protected DbSet<T> _dbSet;
+
+    protected BaseRepository(HrmsDbContext hrmsDbContext)
     {
-        protected DbSet<T> _dbSet;
+        _dbSet = hrmsDbContext.Set<T>();
+    }
 
-        protected BaseRepository(HrmsDbContext hrmsDbContext)
-        {
-            _dbSet = hrmsDbContext.Set<T>();
-        }
+    public T Find(object key)
+    {
+        return _dbSet.Find(key);
+    }
 
-        public T Find(object key)
-        {
-            return _dbSet.Find(key);
-        }
-
-        public void Add(T entity)
-        {
-            _dbSet.Add(entity);
-        }
+    public void Add(T entity)
+    {
+        _dbSet.Add(entity);
     }
 }
