@@ -42,7 +42,7 @@ internal class UnitOfWork : IUnitOfWork, IDisposable
         // do audit tracking
         foreach (EntityEntry entry in _hrmsDbContext.ChangeTracker.Entries())
         {
-            if (entry.State != Added && entry.State != Modified) continue;
+            if (entry.State is not Added and not Modified) continue;
             if (entry.Entity is not BaseEntity entity) continue;
             if (entry.State == Added)
             {
