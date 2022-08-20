@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HRMS.Dal.Contracts.Entities
+﻿namespace HRMS.Dal.Contracts.Entities
 {
     public class UserRole : BaseEntity
     {

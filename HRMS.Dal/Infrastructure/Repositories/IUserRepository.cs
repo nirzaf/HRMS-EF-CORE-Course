@@ -1,5 +1,4 @@
-﻿using HRMS.Dal.Contracts;
-using HRMS.Dal.Contracts.Entities;
+﻿using HRMS.Dal.Contracts.Entities;
 
 namespace HRMS.Dal.Repositories
 {

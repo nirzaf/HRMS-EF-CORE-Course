@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using HRMS.Dal.Contracts.Entities;
-using HRMS.Dal.Repositories;
+﻿using HRMS.Dal.Repositories;
 using HRMS.Dal.RepositoryImplementations;
 using Microsoft.Extensions.DependencyInjection;
 
