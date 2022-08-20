@@ -10,15 +10,14 @@ public class HrmsDbContext : DbContext
 
     public HrmsDbContext(DbContextOptions<HrmsDbContext> options) : base(options)
     {
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserRole>().HasData(new UserRole[]
-        {
-            new UserRole {UserRoleId = 1, RoleName = "user"},
-            new UserRole {UserRoleId = 2, RoleName = "manager"}
-        });
+        modelBuilder.Entity<UserRole>()
+            .HasData(
+                new() { UserRoleId = 1, RoleName = "user" },
+                new() { UserRoleId = 2, RoleName = "manager" }
+            );
     }
 }
